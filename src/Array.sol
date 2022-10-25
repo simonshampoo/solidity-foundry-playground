@@ -52,7 +52,7 @@ library Array {
         16, 645326474426547203313410069153905908525362434349, 2964, 2964, 501, 2778, 2919, 1692
         ]
 
-        though I'm confused because it should totally work here. is overflow a problem? idk 
+        though I'm confused because it should totally work here. overflow not a problem so what gives 
     */
     function maxOf(uint256[] memory a) public pure returns (uint256 max) {
         assembly {
