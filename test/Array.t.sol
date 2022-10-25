@@ -5,11 +5,9 @@ import "forge-std/Test.sol";
 import "../src/Array.sol";
 
 contract ArrayTest is Test {
-    Array public array;
+    using Array for *;
 
-    function setUp() public {
-        array = new Array();
-    }
+    function setUp() public {}
 
     function testSumBad() public {
         uint256[] memory a = new uint256[](5);
@@ -18,7 +16,7 @@ contract ArrayTest is Test {
         a[2] = 3;
         a[3] = 4;
         a[4] = 5;
-        uint256 sum = array.badSumOf(a);
+        uint256 sum = Array.badSumOf(a);
         assertEq(sum, 15);
     }
 
@@ -29,7 +27,7 @@ contract ArrayTest is Test {
         a[2] = 3;
         a[3] = 4;
         a[4] = 5;
-        uint256 sum = array.okaySumOf(a);
+        uint256 sum = Array.okaySumOf(a);
         assertEq(sum, 15);
     }
 
@@ -40,20 +38,34 @@ contract ArrayTest is Test {
         a[2] = 3;
         a[3] = 4;
         a[4] = 5;
-        uint256 sum = array.sumOf(a);
+        uint256 sum = Array.sumOf(a);
         assertEq(sum, 15);
     }
 
-    function testMax() public {
-        uint256[] memory a = new uint256[](5);
-        a[0] = 1;
-        a[1] = 2;
-        a[2] = 3;
-        a[3] = 4;
-        a[4] = 5;
-        uint256 m = array.maxOf(a);
-        console.logUint(m);
-        assertEq(m, 5);
-    }
+    function testMax(uint256[] memory a) public {
+        bool zeroPresent = false;
+        for (uint256 i; i < a.length;) {
+            if (a[i] <= 0) {
+                zeroPresent = true;
+                break;
+            }
+            unchecked {
+                i++;
+            }
+        }
+        vm.assume(!zeroPresent);
 
+        uint256 m = Array.maxOf(a);
+        uint256 max = 0;
+        for (uint256 i; i < a.length;) {
+            if (a[i] > max) {
+                max = a[i];
+            }
+            unchecked {
+                i++;
+            }
+        }
+
+        assertEq(m, max);
+    }
 }
