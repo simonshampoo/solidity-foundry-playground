@@ -38,11 +38,21 @@ library Array {
     }
 
     /*
-    There is a bug with this function. Whenever there is a 0 in the array we either: 
+    There is a bug with this function. There are multiple fail cases:  
 
-    1. get an off-by-one error 
-    2. have 0 as the max value
+    1. when the array length is 2 OR
+    2. when a zero is present in the array 
+    
 
+    3. when both, it is when the array is just crazy. like look at this one test case that fails: 
+
+    args = [1077, 2850, 110, 16, 50, 648, 2946, 189, 2836, 595, 10, 681, 65537, 
+        2728, 2686, 365, 232, 2946, 237, 63, 3638658538924045119126437326771845363306064498, 
+        416, 225, 65536, 2806, 431, 224, 323, 2402, 102, 2843, 2499, 1300, 595, 102, 1823, 
+        16, 645326474426547203313410069153905908525362434349, 2964, 2964, 501, 2778, 2919, 1692
+        ]
+
+        though I'm confused because it should totally work here. is overflow a problem? idk 
     */
     function maxOf(uint256[] memory a) public pure returns (uint256 max) {
         assembly {
