@@ -54,7 +54,7 @@ contract ArrayTest is Test {
             }
         }
         vm.assume(a.length > 2);
-        vm.assume(!zeroPresent);
+         vm.assume(!zeroPresent);
 
         uint256 m = Array.maxOf(a);
         uint256 max = 0;
